@@ -36,8 +36,8 @@
 			<div class="form-group">
 				<input type="text" name="description" class="form-control" placeholder="Type description"  required>
 			</div>
-			
-			<input type="submit" class="btn btn-success" value="Add Task">	
+
+			<input type="submit" class="btn btn-success" value="Add Task"/>	
 			
 			<input type="button" onclick="location.replace('user_logout.php')" class="btn btn-danger" value="Log out">
 			
@@ -50,7 +50,7 @@
 </html>
 <?php
 	include 'connect_db.php';
-
+	
 	if($_SERVER['REQUEST_METHOD']=='POST'){
 			
 		$note = $_REQUEST['notes'];

@@ -47,6 +47,7 @@
 		}
 		else
 		{
+			
 			$_SESSION['user_success'] = "User logged in successfully";
 			header('location:create_task_form.php');				
 			return;

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <head>
 	<title>Create Task Page</title>
@@ -5,48 +6,65 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-	<div class="login-box">
-	<div class="row">
-	
-	<div class="col-md-6 login-right">
 		<?php
-			session_start();
-			if(isset($_SESSION['user_success'])){
-				
-				echo "<div align=left><font color=green>".$_SESSION['user_success']."</font></div>";
-				session_destroy();
+			if(isset($_SESSION['user_success'])){				
+				echo '<script>alert("User Logged in successfully")</script>';  
+				unset($_SESSION['user_success']);
 			}
 		?>
+		
 		<?php
-			
-			if(isset($_SESSION['add_task'])){
-				
-				echo "<div align=right><font color=green>".$_SESSION['add_task']."</font></div>";
-				session_destroy();				
-
-			}
+		if(isset($_SESSION['user']))		
+		{
 		?>
-		<h2> Add Task</h2>
-		<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">			
-			<div class="form-group">
-				<input type="text" name="notes" class="form-control" placeholder="Type notes"  required>
-			</div>
+		<div class="container">
+			<div class="login-box">
+			<div class="row">
 			
-			<div class="form-group">
-				<input type="text" name="description" class="form-control" placeholder="Type description"  required>
-			</div>
+			<div class="col-md-6 login-right">
+		
 
-			<input type="submit" class="btn btn-success" value="Add Task"/>	
-			
-			<input type="button" onclick="location.replace('user_logout.php')" class="btn btn-danger" value="Log out">
-			
-		</form>					
+			<h2> Add Task</h2>
+			<form>			
+				<div class="form-group">
+					<input type="text" id="note" name="notes" class="form-control" placeholder="Type notes"  required>
+				</div>
+				
+				<div class="form-group">
+					<input type="text" id="desc" name="description" class="form-control" placeholder="Type description"  required>
+				</div>
+
+				<button type="submit" 
+						formaction="<?php echo $_SERVER['PHP_SELF'];?>"
+						formmethod="post"
+						class="btn btn-success"
+						onclick="add_alert()">
+						Add Task
+				</button>				
+				
+				<button type="button" onclick="location.replace('user_logout.php')" class="btn btn-danger" >Log out</button>			
+				
+			</form>
+				
+		<?php			
+		}
+		?>				
 	</div>		
 </div>
 </div>
 </div>
 </body>
+<script>
+	function add_alert()
+	{
+		let n = document.getElementById("note").value;
+		let d = document.getElementById("desc").value;
+		if(n!='' && d!='')
+			alert("Task added successfully");
+		else
+			alert("Fill up all fields");
+	}
+</script>
 </html>
 <?php
 	include 'connect_db.php';
@@ -59,12 +77,5 @@
 		$q = "insert into user_info(start_time, stop_time, notes, description) values (null, null, '$note', '$desc')";
 
 		$r = mysqli_query($con,$q);
-
-		if($r) 
-		{
-			$_SESSION['add_task'] = "Task added successfully";
-			header('location:create_task_form.php');
-			return;
-		}
 	}
 ?>

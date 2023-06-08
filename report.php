@@ -1,9 +1,10 @@
 <?php  
 	include 'connect_db.php';
-	
+	session_start();
 	$q = "select * from user_info";
 	
 	$r = mysqli_query($con, $q);
+	
 	
 	if($r->num_rows > 0){ 
 		$delimiter = ","; 
@@ -25,6 +26,8 @@
      
     // Move back to beginning of file 
     fseek($f, 0); 
+
+	echo '<script>alert("Report generated")</script>';
      
     // Set headers to download file rather than displayed 
     header('Content-Type: text/csv'); 
@@ -32,6 +35,12 @@
      
     //output all remaining data on a file pointer 
     fpassthru($f); 
+
 	} 
+	else{
+		$_SESSION['report_error'] = 'report error';
+		header('location:create_user_form.php');
+	}
+	
 	exit;  
 ?>

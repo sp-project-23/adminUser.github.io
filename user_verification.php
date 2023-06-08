@@ -3,8 +3,15 @@
 	include 'connect_db.php';
 	session_start();
 
-	$user_email = trim($_POST['u_email']);
-	$user_pass = md5(trim($_POST['u_password']));  	
+	$user_email = validate($_POST['u_email']);
+	$user_pass = md5(validate($_POST['u_password']));  	
+
+	function validate($d)
+	{
+		$t = trim($d);
+		$data = stripslashes($t);
+		return $data;
+	}
 
 	
 	$q = "select * from user where email='$user_email' && password='$user_pass'";
@@ -30,33 +37,29 @@
 		$date2 = date_create($record['last_login']);		
 		$diff = date_diff($date1, $date2);		
 		$d = $diff->format("%a");		
-		
+
 		if($f==1)
 		{
-			$_SESSION['reset_password'] = "First time reset password";
-			$_SESSION['user_email'] = $user_email;
+			$_SESSION['user'] = $user_email;
+			$_SESSION['reset'] = 'reset';
 			header('location:new_password_form.php');
-			return;
 		}
 		else if($d>30)
 		{
-			$_SESSION['reset_password'] = "Last password changed 30 days ago";
-			$_SESSION['user_email'] = $user_email;
+			$_SESSION['user'] = $user_email;
+			$_SESSION['reset_30'] = 'reset30';			
 			header('location:new_password_form.php');
-			return;
 		}
 		else
 		{
-			
-			$_SESSION['user_success'] = "User logged in successfully";
+			$_SESSION['user'] = $user_email;
+			$_SESSION['user_success'] = 'success';	
 			header('location:create_task_form.php');				
-			return;
 		}
 	}
 	else
 	{
-		$_SESSION['user_error'] = "Invalid User Email or Password";
+		$_SESSION['user_error'] = 'error';	
 		header('location:index.php');	
-		return;
 	}
 ?>

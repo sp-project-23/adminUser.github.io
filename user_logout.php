@@ -1,8 +1,6 @@
 <?php
 session_start();
-unset($_SESSION['add_task']);
-unset($_SESSION['user_success']);
-//unset($_SESSION['user_name']);
-$_SESSION['user_logout'] = "User logged out successfully";
+unset($_SESSION['user']);
+$_SESSION['user_logout'] = "user logout";
 header("Location:index.php");
 ?>

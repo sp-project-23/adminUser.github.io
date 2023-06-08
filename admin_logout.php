@@ -1,7 +1,6 @@
 <?php
 session_start();
-unset($_SESSION['create_user']);
-//unset($_SESSION['admin_name']);
-$_SESSION['admin_logout'] = "Admin logged out successfully";
+unset($_SESSION['admin']);
+$_SESSION['admin_logout'] = "admin logout";
 header("Location:index.php");
 ?>

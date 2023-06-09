@@ -17,19 +17,20 @@
 		{
 			if($flag==0){
 				echo '<script>alert("Last password changed 30 days ago")</script>';
-				unset($_SESSION['reset']);
+				//unset($_SESSION['reset']);
 			}
 			else{
 				echo '<script>alert("First time reset password")</script>';
-				unset($_SESSION['reset_30']);
+				//unset($_SESSION['reset_30']);
 			}
+			session_destroy();
 		?>
 
 		<div class="container">
 		<div class="login-box">
 		<div class="row">
 		
-		<div class="col-md-6 login-right">
+		<div class="col-md-6 login-left">
 			<h2> Reset Password</h2>			
 			<form>	
 				<div class="form-group">

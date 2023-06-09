@@ -28,10 +28,7 @@
 				<div class="login-box">
 				<div class="row">
 				
-				<div class="col-md-6 login-right">
-			
-
-		
+				<div class="col-md-6 login-left">		
 
 			<h2> Create User/Employee</h2>
 			<form>		
